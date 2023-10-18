@@ -309,6 +309,8 @@ void Enlarge_filter_RGB();{
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
                 q1[i][j][k] = imageRGB1[(i / 2) ][(j / 2) ][k];
+                 //Create a new image with the same size as the original image that contains the first quadrant
+                // that whose rows and columns start from pixel 0 to pixel 127
                 }
             }
         }
@@ -324,6 +326,8 @@ void Enlarge_filter_RGB();{
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
                 q1[i][j][k] = imageRGB1[i/2][(j/2) + 128][k] ;
+                //Create a new image with the same size as the original image that contains the second quadrant
+                // that whose rows starts from pixel 0 to 127 and columns starts from pixel 128 to pixel 255
                 }
             }
         }
@@ -339,6 +343,8 @@ void Enlarge_filter_RGB();{
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
                 q1[i][j][k] = imageRGB1[(i/2) + 128][(j/2)][k];
+                //Create a new image with the same size as the original image that contains the third quadrant
+                // that whose rows starts from pixel 128 to 255 and columns starts from pixel 0 to pixel 127
                 }
             }
         }
@@ -353,7 +359,8 @@ void Enlarge_filter_RGB();{
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                q1[i][j][k] = imageRGB1[(i / 2) + 128][(j / 2) + 128][k];
+                q1[i][j][k] = imageRGB1[(i / 2) + 128][(j / 2) + 128][k]; //Create a new image with the same size as the original image that contains the fourth quadrant
+                // that whose rows and columns start from pixel 128 to pixel 255
                 }
             }
         }
@@ -375,7 +382,7 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
         for (int j = 0; j < 128; j++) {
             for(int k = 0; k < RGB; k++){
 
-               q1[i][j][k] = imageRGB1[i][j][k];
+               q1[i][j][k] = imageRGB1[i][j][k]; //Create a new image that contains the first quadrant
             }
         }
     }
@@ -384,7 +391,7 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
         for (int j = 128; j < SIZE; j++) {
             for(int k = 0; k < RGB; k++){
 
-                q2[i][j][k] = imageRGB1[i][j][k];
+                q2[i][j][k] = imageRGB1[i][j][k]; //Create a new image that contains the second quadrant
             }
         }
     }
@@ -393,7 +400,7 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
         for (int j = 0; j < 128; j++) {
             for(int k = 0; k < RGB; k++){
 
-                q3[i][j][k] = imageRGB1[i][j][k];
+                q3[i][j][k] = imageRGB1[i][j][k]; //Create a new image that contains the third quadrant
             }
         }
     }
@@ -402,7 +409,7 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
         for (int j = 128; j < SIZE; j++) {
             for(int k = 0; k < RGB; k++){
 
-                q4[i][j][k] = imageRGB1[i][j][k];
+                q4[i][j][k] = imageRGB1[i][j][k]; //Create a new image that contains the fourth quadrant
             }
         }
     }
@@ -417,14 +424,14 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
     }
 
     for(int h = 0; h < 4; h++){
-
+//iterate through the 4 quarters, and for each quarter fill in the quarter that the user wants
 
         if ((h + 1) == 1) {
             for (int i = 0; i < 128; i++) {
                 for (int j = 0; j < 128; j++) {
                     for(int k = 0; k < RGB; k++){
                     if (order[h] == 1) {
-
+// iterate through the first quarter
                         imageRGB1[i][j][k] = q1[i][j][k];
 
                     } else if (order[h] == 2) {
@@ -444,7 +451,7 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
 
             }
         } else if ((h + 1) == 2) {
-
+// iterate through the second quarter
             for (int i = 0; i < 128; i++) {
                 for (int j = 128; j < SIZE; j++) {
                     for(int k = 0; k < RGB; k++){
@@ -471,7 +478,7 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
 
             }
         } else if ((h + 1) == 3) {
-
+// iterate through the third quarter
             for (int i = 128; i < SIZE; i++) {
                 for (int j = 0; j < 128; j++) {
                     for(int k = 0; k < RGB; k++) {
@@ -497,7 +504,7 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
 
             }
         } else if ((h + 1) == 4) {
-
+// iterate through the fourth quarter
             for (int i = 128; i < SIZE; i++) {
                 for (int j = 128; j < SIZE; j++) {
                     for(int k = 0; k < RGB; k++) {
@@ -533,7 +540,7 @@ void Skew_Horizontally_filter_RGB(){
 
     double degree;
     cin>>degree;
-    degree = degree * (M_PI / 180);
+    degree = degree * (M_PI / 180); //Convert the angle from degrees to radians
 
     double x = 256 / (1 + (1 / tan(degree)));
 
@@ -549,18 +556,19 @@ void Skew_Horizontally_filter_RGB(){
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
             for(int k = 0; k < RGB; k++){
-            image2[i][( j * int(x) ) / SIZE][k] = imageRGB1[i][j][k];
+            image2[i][( j * int(x) ) / SIZE][k] = imageRGB1[i][j][k]; //Shrink the image by a value of x
+            // to avoid it from exceeding the original image size
             }
         }
     }
 
-    double step = SIZE - x;
-    double move = step / SIZE;
+    double step = SIZE - x; // The point at which I start pixel placement
+    double move = step / SIZE; //Number of steps
 
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
             for(int k = 0; k < RGB; k++){
-            image3[i][j + int(step)][k] = image2[i][j][k];
+            image3[i][j + int(step)][k] = image2[i][j][k]; // shifting the image
             }
         }
         step -= move;
