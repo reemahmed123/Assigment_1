@@ -110,9 +110,9 @@ void view_menu(){
     cout<<"8- Enlarge Filter"<<endl;
     cout<<"9- Shrink Filter"<<endl;
     cout<<"a- Mirror Filter"<<endl;
-    cout<<"b- Suffle Filter"<<endl;
+    cout<<"b- Shuffle Filter"<<endl;
     cout<<"c- Blur Filter"<<endl;
-    cout<<"d- Crop Flter"<<endl;
+    cout<<"d- Crop Filter"<<endl;
     cout<<"e- Skew Horizontally Filter"<<endl;
     cout<<"f- Skew Vertically Filter"<<endl;
 }
