@@ -25,6 +25,9 @@ void darken_and_lighten_filter_RGB();
 void Mirror_filter_RGB();
 void Detect_edges_filter_RGB();
 void Crop_filter_RGB();
+void Enlarge_filter_RGB();
+void Shuffle_filter_RGB();
+void Skew_Horizontally_filter_RGB();
 void view_menu();  //menu contains filters
 int main()
 {
@@ -60,12 +63,21 @@ int main()
                 case '7':
                     Detect_edges_filter_RGB();
                     break;
+                case '8':
+                    Enlarge_filter_RGB();
+                        break;
                 case 'a':
                     Mirror_filter_RGB();
                     break;
+                case 'b':
+                    Shuffle_filter_RGB();
+                        break;
                 case 'd':
                     Crop_filter_RGB();
                     break;
+                case 'e':
+                    Skew_Horizontally_filter_RGB();
+                        break;
             }
         }
     }
@@ -287,3 +299,278 @@ void Detect_edges_filter_RGB() {
     }
 }
 //-----------------------------------------------------------------------------------------
+void Enlarge_filter_RGB();{
+    unsigned char q1[SIZE][SIZE][RGB];
+    int quarter;
+    cout<<"Enter quarter number that you want to enlarge: ";
+    cin>>quarter;
+    if(quarter == 1){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < RGB; k++){
+                q1[i][j][k] = imageRGB1[(i / 2) ][(j / 2) ][k];
+                }
+            }
+        }
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < RGB; k++){
+                imageRGB1[i][j][k] = q1[i][j][k];
+                }
+            }
+        }
+    }else if(quarter == 2){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < RGB; k++){
+                q1[i][j][k] = imageRGB1[i/2][(j/2) + 128][k] ;
+                }
+            }
+        }
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < RGB; k++){
+                imageRGB1[i][j][k] = q1[i][j][k];
+                }
+            }
+        }
+    } else if(quarter == 3){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < RGB; k++){
+                q1[i][j][k] = imageRGB1[(i/2) + 128][(j/2)][k];
+                }
+            }
+        }
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < RGB; k++){
+                imageRGB1[i][j][k] = q1[i][j][k];
+                }
+            }
+        }
+    }else if(quarter == 4){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < RGB; k++){
+                q1[i][j][k] = imageRGB1[(i / 2) + 128][(j / 2) + 128][k];
+                }
+            }
+        }
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < RGB; k++){
+                imageRGB1[i][j][k] = q1[i][j][k];
+                }
+            }
+        }
+    }
+}
+}
+//------------------------------------------------------------------------------------------------
+void Shuffle_filter_RGB(){
+unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZE][SIZE][RGB];
+
+    for (int i = 0; i < 128; i++) {
+        for (int j = 0; j < 128; j++) {
+            for(int k = 0; k < RGB; k++){
+
+               q1[i][j][k] = imageRGB1[i][j][k];
+            }
+        }
+    }
+
+    for (int i = 0; i < 128; i++) {
+        for (int j = 128; j < SIZE; j++) {
+            for(int k = 0; k < RGB; k++){
+
+                q2[i][j][k] = imageRGB1[i][j][k];
+            }
+        }
+    }
+
+    for (int i = 128; i < SIZE; i++) {
+        for (int j = 0; j < 128; j++) {
+            for(int k = 0; k < RGB; k++){
+
+                q3[i][j][k] = imageRGB1[i][j][k];
+            }
+        }
+    }
+
+    for (int i = 128; i < SIZE; i++) {
+        for (int j = 128; j < SIZE; j++) {
+            for(int k = 0; k < RGB; k++){
+
+                q4[i][j][k] = imageRGB1[i][j][k];
+            }
+        }
+    }
+
+    cout<<"Enter the order you want to the quarters in the new image: ";
+
+    int order[4];
+
+    for(int i = 0; i < 4 ; i++){
+
+        cin>>order[i];
+    }
+
+    for(int h = 0; h < 4; h++){
+
+
+        if ((h + 1) == 1) {
+            for (int i = 0; i < 128; i++) {
+                for (int j = 0; j < 128; j++) {
+                    for(int k = 0; k < RGB; k++){
+                    if (order[h] == 1) {
+
+                        imageRGB1[i][j][k] = q1[i][j][k];
+
+                    } else if (order[h] == 2) {
+
+                        imageRGB1[i][j][k] = q2[i][j + 128][k];
+
+                    } else if (order[h] == 3) {
+
+                        imageRGB1[i][j][k] = q3[i + 128][j][k];
+
+                    } else if (order[h] == 4) {
+
+                        imageRGB1[i][j][k] = q4[i + 128][j + 128][k];
+                    }
+                    }
+                }
+
+            }
+        } else if ((h + 1) == 2) {
+
+            for (int i = 0; i < 128; i++) {
+                for (int j = 128; j < SIZE; j++) {
+                    for(int k = 0; k < RGB; k++){
+
+                    if (order[h] == 1) {
+
+                        imageRGB1[i][j][k] = q1[i][j - 128][k];
+
+                    } else if (order[h] == 2) {
+
+                        imageRGB1[i][j][k] = q2[i][j][k];
+
+                    } else if (order[h] == 3) {
+
+                        imageRGB1[i][j][k] = q3[i + 128][j - 128][k];
+
+                    } else if (order[h] == 4) {
+
+                        imageRGB1[i][j][k] = q4[i + 128][j][k];
+                    }
+                    }
+
+                }
+
+            }
+        } else if ((h + 1) == 3) {
+
+            for (int i = 128; i < SIZE; i++) {
+                for (int j = 0; j < 128; j++) {
+                    for(int k = 0; k < RGB; k++) {
+
+                        if (order[h] == 1) {
+
+                            imageRGB1[i][j][k] = q1[i - 128][j][k];
+
+                        } else if (order[h] == 2) {
+
+                            imageRGB1[i][j][k] = q2[i - 128][j + 128][k];
+
+                        } else if (order[h] == 3) {
+
+                            imageRGB1[i][j][k] = q3[i][j][k];
+
+                        } else if (order[h] == 4) {
+
+                            imageRGB1[i][j][k] = q4[i][j + 128][k];
+                        }
+                    }
+                }
+
+            }
+        } else if ((h + 1) == 4) {
+
+            for (int i = 128; i < SIZE; i++) {
+                for (int j = 128; j < SIZE; j++) {
+                    for(int k = 0; k < RGB; k++) {
+
+                        if (order[h] == 1) {
+
+                            imageRGB1[i][j][k] = q1[i - 128][j - 128][k];
+
+                        } else if (order[h] == 2) {
+
+                            imageRGB1[i][j][k] = q2[i - 128][j][k];
+
+                        } else if (order[h] == 3) {
+
+                            imageRGB1[i][j][k] = q3[i][j - 128][k];
+
+                        } else if (order[h] == 4) {
+
+                            imageRGB1[i][j][k] = q4[i][j][k];
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+}
+//------------------------------------------------------------------------------------------------
+void Skew_Horizontally_filter_RGB(){
+
+    cout<<"Enter the degree you want the image to be skewed by: ";
+
+    double degree;
+    cin>>degree;
+    degree = degree * (M_PI / 180);
+
+    double x = 256 / (1 + (1 / tan(degree)));
+
+    unsigned char image2[SIZE][SIZE][RGB] , image3[SIZE][SIZE][RGB];
+
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            for(int k = 0; k < RGB; k++){
+            image2[i][j][k] = 0;
+            }
+        }
+    }
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            for(int k = 0; k < RGB; k++){
+            image2[i][( j * int(x) ) / SIZE][k] = imageRGB1[i][j][k];
+            }
+        }
+    }
+
+    double step = SIZE - x;
+    double move = step / SIZE;
+
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            for(int k = 0; k < RGB; k++){
+            image3[i][j + int(step)][k] = image2[i][j][k];
+            }
+        }
+        step -= move;
+    }
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            for(int k = 0; k < RGB; k++){
+              imageRGB1[i][j][k] = image3[i][j][k];
+            }
+        }
+    }
+
+}
