@@ -258,6 +258,8 @@ void Enlarge_filter_GS(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 q1[i][j] = imageGS1[(i / 2) ][(j / 2) ];
+                //Create a new image with the same size as the original image that contains the first quadrant
+                // that whose rows and columns start from pixel 0 to pixel 127
             }
         }
         for(int i = 0; i < SIZE; i++){
@@ -269,6 +271,8 @@ void Enlarge_filter_GS(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 q1[i][j] = imageGS1[i/2][(j/2) + 128] ;
+                //Create a new image with the same size as the original image that contains the second quadrant
+                // that whose rows starts from pixel 0 to 127 and columns starts from pixel 128 to pixel 255
             }
         }
         for(int i = 0; i < SIZE; i++){
@@ -280,6 +284,8 @@ void Enlarge_filter_GS(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 q1[i][j] = imageGS1[(i/2) + 128][(j/2)] ;
+                //Create a new image with the same size as the original image that contains the third quadrant
+                // that whose rows starts from pixel 128 to 255 and columns starts from pixel 0 to pixel 127
             }
         }
         for(int i = 0; i < SIZE; i++){
@@ -291,6 +297,8 @@ void Enlarge_filter_GS(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 q1[i][j] = imageGS1[(i / 2) + 128][(j / 2) + 128];
+                //Create a new image with the same size as the original image that contains the fourth quadrant
+                // that whose rows and columns start from pixel 128 to pixel 255
             }
         }
         for(int i = 0; i < SIZE; i++){
@@ -308,28 +316,28 @@ void Shuffle_filter_GS(){
     for (int i = 0; i < 128; i++) {
         for (int j = 0; j < 128; j++) {
 
-            q1[i][j] = imageGS1[i][j];
+            q1[i][j] = imageGS1[i][j]; //Create a new image that contains the first quadrant
         }
     }
 
     for (int i = 0; i < 128; i++) {
         for (int j = 128; j < SIZE; j++) {
 
-            q2[i][j] = imageGS1[i][j];
+            q2[i][j] = imageGS1[i][j]; //Create a new image that contains the second quadrant
         }
     }
 
     for (int i = 128; i < SIZE; i++) {
         for (int j = 0; j < 128; j++) {
 
-            q3[i][j] = imageGS1[i][j];
+            q3[i][j] = imageGS1[i][j]; //Create a new image that contains the third quadrant
         }
     }
 
     for (int i = 128; i < SIZE; i++) {
         for (int j = 128; j < SIZE; j++) {
 
-            q4[i][j] = imageGS1[i][j];
+            q4[i][j] = imageGS1[i][j]; //Create a new image that contains the fourth quadrant
         }
     }
 
@@ -344,10 +352,12 @@ void Shuffle_filter_GS(){
 
     for(int h = 0; h < 4; h++){
 
+//iterate through the 4 quarters, and for each quarter fill in the quarter that the user wants
 
         if ((h + 1) == 1) {
             for (int i = 0; i < 128; i++) {
                 for (int j = 0; j < 128; j++) {
+                    // iterate through the first quarter
                     if (order[h] == 1) {
 
                         imageGS1[i][j] = q1[i][j];
@@ -369,7 +379,7 @@ void Shuffle_filter_GS(){
 
             }
         } else if ((h + 1) == 2) {
-
+// iterate through the second quarter
             for (int i = 0; i < 128; i++) {
                 for (int j = 128; j < SIZE; j++) {
 
@@ -394,7 +404,7 @@ void Shuffle_filter_GS(){
 
             }
         } else if ((h + 1) == 3) {
-
+// iterate through the third quarter
             for (int i = 128; i < SIZE; i++) {
                 for (int j = 0; j < 128; j++) {
 
@@ -419,7 +429,7 @@ void Shuffle_filter_GS(){
 
             }
         } else if ((h + 1) == 4) {
-
+// iterate through the fourth quarter
             for (int i = 128; i < SIZE; i++) {
                 for (int j = 128; j < SIZE; j++) {
 
@@ -454,7 +464,7 @@ void Skew_Horizontally_filter_GS(){
 
     double degree;
     cin>>degree;
-    degree = degree * (M_PI / 180);
+    degree = degree * (M_PI / 180); //Convert the angle from degrees to radians
 
     double x = 256 / (1 + (1 / tan(degree)));
 
@@ -467,16 +477,17 @@ void Skew_Horizontally_filter_GS(){
     }
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
-            image2[i][( j * int(x) ) / SIZE] = imageGS1[i][j];
+            image2[i][( j * int(x) ) / SIZE] = imageGS1[i][j]; //Shrink the image by a value of x
+            // to avoid it from exceeding the original image size
         }
     }
 
-    double step = SIZE - x;
-    double move = step / SIZE;
+    double step = SIZE - x;  // The point at which I start pixel placement
+    double move = step / SIZE; //Number of steps
 
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
-            image3[i][j + int(step)] = image2[i][j];
+            image3[i][j + int(step)] = image2[i][j]; // shifting the image
         }
         step -= move;
     }
