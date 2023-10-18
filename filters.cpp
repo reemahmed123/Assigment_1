@@ -333,7 +333,7 @@ void Shuffle_filter_GS(){
         }
     }
 
-    cout<<"Enter the order you want to the quarters in the new image: ";
+    cout<<"Enter the order you want for the quarters in the new image: ";
 
     int order[4];
 
