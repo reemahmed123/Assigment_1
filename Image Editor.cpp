@@ -51,12 +51,21 @@ int main()
                 case '7':
                     Detect_edges_filter_GS();
                     break;
+                case '8':
+                    Enlarge_filter_Gs();
+                        break;
                 case 'a':
                     Mirror_filter_GS();
                     break;
+                case 'b':
+                    Shuffle_filter_GS();
+                        break;
                 case 'd':
                     Crop_filter_GS();
                     break;
+                case 'e':
+                    Skew_Horizontally_filter_GS();
+                        break;
 
 
             }
