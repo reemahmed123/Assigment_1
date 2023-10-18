@@ -249,3 +249,241 @@ void Crop_filter_GS() {
     }
 }
 //------------------------------------------------------------------------------------
+void Enlarge_filter_GS(){
+    unsigned char q1[SIZE][SIZE];
+    int quarter;
+    cout<<"Enter quarter number that you want to enlarge: ";
+    cin>>quarter;
+    if(quarter == 1){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                q1[i][j] = imageGS1[(i / 2) ][(j / 2) ];
+            }
+        }
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                imageGS1[i][j] = q1[i][j];
+            }
+        }
+    }else if(quarter == 2){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                q1[i][j] = imageGS1[i/2][(j/2) + 128] ;
+            }
+        }
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                imageGS1[i][j] = q1[i][j];
+            }
+        }
+    } else if(quarter == 3){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                q1[i][j] = imageGS1[(i/2) + 128][(j/2)] ;
+            }
+        }
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                imageGS1[i][j] = q1[i][j];
+            }
+        }
+    }else if(quarter == 4){
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                q1[i][j] = imageGS1[(i / 2) + 128][(j / 2) + 128];
+            }
+        }
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                imageGS1[i][j] = q1[i][j];
+            }
+        }
+    }
+}
+//------------------------------------------------------------------------------------------
+void Shuffle_filter_GS(){
+
+    unsigned char q1[SIZE][SIZE],q2[SIZE][SIZE],q3[SIZE][SIZE],q4[SIZE][SIZE];
+
+    for (int i = 0; i < 128; i++) {
+        for (int j = 0; j < 128; j++) {
+
+            q1[i][j] = imageGS1[i][j];
+        }
+    }
+
+    for (int i = 0; i < 128; i++) {
+        for (int j = 128; j < SIZE; j++) {
+
+            q2[i][j] = imageGS1[i][j];
+        }
+    }
+
+    for (int i = 128; i < SIZE; i++) {
+        for (int j = 0; j < 128; j++) {
+
+            q3[i][j] = imageGS1[i][j];
+        }
+    }
+
+    for (int i = 128; i < SIZE; i++) {
+        for (int j = 128; j < SIZE; j++) {
+
+            q4[i][j] = imageGS1[i][j];
+        }
+    }
+
+    cout<<"Enter the order you want to the quarters in the new image: ";
+
+    int order[4];
+
+    for(int i = 0; i < 4 ; i++){
+
+        cin>>order[i];
+    }
+
+    for(int h = 0; h < 4; h++){
+
+
+        if ((h + 1) == 1) {
+            for (int i = 0; i < 128; i++) {
+                for (int j = 0; j < 128; j++) {
+                    if (order[h] == 1) {
+
+                        imageGS1[i][j] = q1[i][j];
+
+                    } else if (order[h] == 2) {
+
+                        imageGS1[i][j] = q2[i][j + 128];
+
+                    } else if (order[h] == 3) {
+
+                        imageGS1[i][j] = q3[i + 128][j];
+
+                    } else if (order[h] == 4) {
+
+                        imageGS1[i][j] = q4[i + 128][j + 128];
+                    }
+
+                }
+
+            }
+        } else if ((h + 1) == 2) {
+
+            for (int i = 0; i < 128; i++) {
+                for (int j = 128; j < SIZE; j++) {
+
+                    if (order[h] == 1) {
+
+                        imageGS1[i][j] = q1[i][j - 128];
+
+                    } else if (order[h] == 2) {
+
+                        imageGS1[i][j] = q2[i][j];
+
+                    } else if (order[h] == 3) {
+
+                        imageGS1[i][j] = q3[i + 128][j - 128];
+
+                    } else if (order[h] == 4) {
+
+                        imageGS1[i][j] = q4[i + 128][j];
+                    }
+
+                }
+
+            }
+        } else if ((h + 1) == 3) {
+
+            for (int i = 128; i < SIZE; i++) {
+                for (int j = 0; j < 128; j++) {
+
+                    if (order[h] == 1) {
+
+                        imageGS1[i][j] = q1[i - 128][j];
+
+                    } else if (order[h] == 2) {
+
+                        imageGS1[i][j] = q2[i - 128][j + 128];
+
+                    } else if (order[h] == 3) {
+
+                        imageGS1[i][j] = q3[i][j];
+
+                    } else if (order[h] == 4) {
+
+                        imageGS1[i][j] = q4[i][j + 128];
+                    }
+
+                }
+
+            }
+        } else if ((h + 1) == 4) {
+
+            for (int i = 128; i < SIZE; i++) {
+                for (int j = 128; j < SIZE; j++) {
+
+                    if (order[h] == 1) {
+
+                        imageGS1[i][j] = q1[i - 128][j - 128];
+
+                    } else if (order[h] == 2) {
+
+                        imageGS1[i][j] = q2[i - 128][j];
+
+                    } else if (order[h] == 3) {
+
+                        imageGS1[i][j] = q3[i][j - 128];
+
+                    } else if (order[h] == 4) {
+
+                        imageGS1[i][j] = q4[i][j];
+                    }
+
+                }
+
+            }
+        }
+    }
+
+}
+//----------------------------------------------------------------------------
+void Skew_Horizontally_filter_GS(){
+
+    cout<<"Enter the degree you want the image to be skewed by: ";
+
+    double degree;
+    cin>>degree;
+    degree = degree * (M_PI / 180);
+
+    double x = 256 / (1 + (1 / tan(degree)));
+
+    unsigned char image2[SIZE][SIZE] , image3[SIZE][SIZE];
+
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            image2[i][j] = 255;
+        }
+    }
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            image2[i][( j * int(x) ) / SIZE] = imageGS1[i][j];
+        }
+    }
+
+    double step = SIZE - x;
+    double move = step / SIZE;
+
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            image3[i][j + int(step)] = image2[i][j];
+        }
+        step -= move;
+    }
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            imageGS1[i][j] = image3[i][j];
+        }
+    }
+
+}
