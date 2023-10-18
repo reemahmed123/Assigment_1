@@ -12,6 +12,9 @@ public:
     void Mirror_filter_GS();
     void Detect_edges_filter_GS();
     void Crop_filter_GS();
+    void Enlarge_filter_GS();
+    void Shuffle_filter_GS();
+    void Skew_Horizontally_filter_GS();
 };
 #endif //FILTERS_H
 //this header file contain class of prototypes of filters
