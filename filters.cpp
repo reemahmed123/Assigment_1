@@ -2,7 +2,7 @@
 #include "bmplib.h"
 #include "iostream"
 using namespace std;
-unsigned char imageGS1[SIZE][SIZE],imageGS2[SIZE][SIZE],direct;
+unsigned char imageGS1[SIZE][SIZE],imageGS2[SIZE][SIZE],imgGS1[size][SIZE],,imgGS2[size][SIZE],imgGS3[size][SIZE],direct;
 void Black_and_White_filter_GS() {
     //This filter transform gray scale image to black and white image
     for (int i = 0; i < SIZE; i++) {
