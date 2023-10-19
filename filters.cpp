@@ -308,6 +308,34 @@ void Enlarge_filter_GS(){
         }
     }
 }
+void shrink gs(){
+     for(int i=0;i<SIZE;i++)
+            for(int j=0;j<SIZE;j++)
+            {
+               imgGS2[i][j]=255;
+            }
+        int x;
+        cout<<"enter 1 if you want to shrink to half or two to third or three to quarter";
+        cin>>x;
+        if(x==1) {
+            for (int i = 0; i < SIZE; i++)
+                for (int j = 0; j < SIZE; j++) {
+                    imgGS2[i / 2][j / 2] = imgGS1[i][j];
+                }
+        }
+        else if(x==2) {
+            for (int i = 0; i < SIZE; i++)
+                for (int j = 0; j < SIZE; j++) {
+                    imgGS2[i / 3][j / 3] = imgGS1[i][j];
+                }
+        }
+        else  {
+            for (int i = 0; i < SIZE; i++)
+                for (int j = 0; j < SIZE; j++) {
+                    imgGS2[i / 4][j / 4] = imgGS1[i][j];
+                }
+        }
+}
 //------------------------------------------------------------------------------------------
 void Shuffle_filter_GS(){
 
