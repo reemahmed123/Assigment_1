@@ -486,6 +486,85 @@ void Shuffle_filter_GS(){
 
 }
 //----------------------------------------------------------------------------
+void blur-GS()
+    {
+       for(int i=0;i<SIZE;i++)
+            for(int j=0;j<SIZE;j++)
+            {
+                if(!i and !j)
+                {
+                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i+1][j]+imgGS1[i+1][j+1])/4;
+                }
+                else if(!i and j==255)
+                {
+                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j-1]+imgGS1[i+1][j]+imgGS1[i+1][j-1])/4;
+                }
+                else if(!j and i==255)
+                {
+                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i-1][j]+imgGS1[i-1][j-1])/4;
+                }
+                else if (i==255 and j==255)
+                {
+                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j-1]+imgGS1[i-1][j]+imgGS1[i-1][j-1])/4;
+                }
+                else if (!i)
+                {
+                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i+1][j]+imgGS1[i+1][j+1]+imgGS1[i-1][j]+imgGS1[i-1][j+1])/6;
+                }
+                else if (i==255)
+                {
+                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i][j-1]+imgGS1[i-1][j+1]+imgGS1[i-1][j]+imgGS1[i-1][j-1])/6;
+                }
+                else if(!j)
+                {
+                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i][j-1]+imgGS1[i+1][j+1]+imgGS1[i+1][j]+imgGS1[i+1][j-1])/6;
+                }
+                else if(j==255)
+                {
+                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i+1][j]+imgGS1[i-1][j]+imgGS1[i][j-1]+imgGS1[i-1][j-1]+imgGS1[i+1][j-1])/6;
+                }
+                else {
+
+                        imgGS1[i][j] = (imgGS1[i][j]+imgGS1[i+1][j]+imgGS1[i-1][j]+imgGS1[i][j-1]+imgGS1[i][j+1]+imgGS1[i-1][j-1]+imgGS1[i-1][j+1]+imgGS1[i+1][j-1]
+                                +imgGS1[i+1][j+1])/9;
+
+                }
+            }
+        showGSBMP(imgGS1);
+
+
+    }
+}
+void skew_vertically-GS(){
+     cout<<"enter the degree you want the image to be skewed by: ";
+    double degree;cin>>degree;
+    degree=degree*(M_PI / 180);
+    double x = 265 / (1+(1/tan(degree)));
+    for(int i=0 ;i<SIZE ; i++)
+        for(int j = 0 ; j < SIZE ; j++)
+        {
+            imgGS2[i][j]=255;
+            imgGS3[i][j]=255;
+        }
+    double step = SIZE - x;
+    double move  = step/SIZE;
+    for(int i=0 ;i<SIZE ; i++)
+        for(int j = 0 ; j < SIZE ; j++)
+        {
+            imgGS2[i][j*int (x)/SIZE]=imgGS1[i][j];
+        }
+
+
+    for(int i=0 ;i<SIZE ; i++)
+        for(int j = 0 ; j < SIZE ; j++)
+        {
+            imgGS3[i][j]=imgGS2[i][j-int(step)];
+        }
+    step-=move;
+
+    showGSBMP(imgGS3);
+}
+}
 void Skew_Horizontally_filter_GS(){
 
     cout<<"Enter the degree you want the image to be skewed by: ";
