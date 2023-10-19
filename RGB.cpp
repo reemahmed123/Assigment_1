@@ -11,7 +11,7 @@
 #include "bmplib.cpp"
 using namespace std;
 unsigned char direct;
-unsigned char imageRGB1[SIZE][SIZE][RGB],imageRGB2[SIZE][SIZE][RGB];
+unsigned char imageRGB1[SIZE][SIZE][RGB],imageRGB2[SIZE][SIZE][RGB],imgRGB1[SIZE][SIZE][RGB],imgRGB2[SIZE][SIZE][RGB],imgRGB3[SIZE][SIZE][RGB];
 char choice;
 void loadImageRGB1();
 void loadImageRGB2();
