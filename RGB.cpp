@@ -262,6 +262,53 @@ void shrink_filter()
             }
     }
 }
+void blur_filter_RGB()
+{
+       for(int i=0;i<SIZE;i++)
+            for(int j=0;j<SIZE;j++)
+            for(int k=0;k<RGB;k++)
+            {
+                if(!i and !j)
+                {
+                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i+1][j][k]+imgRGB1[i+1][j+1][k])/4;
+                }
+                else if(!i and j==255)
+                {
+                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j-1][k]+imgRGB1[i+1][j][k]+imgRGB1[i+1][j-1][k])/4;
+                }
+                else if(!j and i==255)
+                {
+                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i-1][j][k]+imgRGB1[i-1][j-1][k])/4;
+                }
+                else if (i==255 and j==255)
+                {
+                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j-1][k]+imgRGB1[i-1][j][k]+imgRGB1[i-1][j-1][k])/4;
+                }
+                else if (!i)
+                {
+                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i+1][j][k]+imgRGB1[i+1][j+1][k]+imgRGB1[i-1][j][k]+imgRGB1[i-1][j+1][k])/6;
+                }
+                else if (i==255)
+                {
+                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i][j-1][k]+imgRGB1[i-1][j+1][k]+imgRGB1[i-1][j][k]+imgRGB1[i-1][j-1][k])/6;
+                }
+                else if(!j)
+                {
+                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i][j-1][k]+imgRGB1[i+1][j+1][k]+imgRGB1[i+1][j][k]+imgRGB1[i+1][j-1][k])/6;
+                }
+                else if(j==255)
+                {
+                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i+1][j][k]+imgRGB1[i-1][j][k]+imgRGB1[i][j-1][k]+imgRGB1[i-1][j-1][k]+imgRGB1[i+1][j-1][k])/6;
+                }
+                else {
+
+                    imgRGB1[i][j][k] = (imgRGB1[i][j][k]+imgRGB1[i+1][j][k]+imgRGB1[i-1][j][k]+imgRGB1[i][j-1][k]+imgRGB1[i][j+1][k]+imgRGB1[i-1][j-1][k]+imgRGB1[i-1][j+1][k]+imgRGB1[i+1][j-1][k]
+                                    +imgRGB1[i+1][j+1][k])/9;
+
+                }
+            }
+
+}
 void Mirror_filter_RGB() {
     char side;
     cout << "Mirror L(left) or R(right) or U(upper) or D(down) Side?? " << endl;
@@ -648,3 +695,38 @@ void Skew_Horizontally_filter_RGB(){
     }
 
 }
+skew_vertically_filter(RGB)
+{
+      cout<<"enter the degree you want the image to be skewed by: ";
+    double degree;cin>>degree;
+    degree=degree*(M_PI / 180);
+    double x = 265 / (1+(1/tan(degree)));
+    for(int i=0 ;i<SIZE ; i++)
+        for(int j = 0 ; j < SIZE ; j++)
+        for(int k=0;k<RGB;k++)
+        {
+            imgRGB2[i][j][k]=255;
+            imgRGB3[i][j][k]=255;
+        }
+    double step = SIZE - x;
+    double move  = step/SIZE;
+    for(int i=0 ;i<SIZE ; i++)
+        for(int j = 0 ; j < SIZE ; j++)
+            for(int k=0;k<RGB;k++)
+        {
+            imgRGB2[i][j*int (x)/SIZE][k]=imgRGB1[i][j][k];
+        }
+
+
+    for(int i=0 ;i<SIZE ; i++)
+        for(int j = 0 ; j < SIZE ; j++)
+            for(int k=0;k<RGB;k++)
+        {
+            imgRGB3[i][j][k]=imgRGB2[i][j-int(step)][k];
+        }
+    step-=move;
+
+    showRGBBMP(imgRGB3);
+}
+}
+
