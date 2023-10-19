@@ -196,7 +196,7 @@ void Flip_filter_RGB() {
     }
 }
 //-------------------------------------------------------------------------------------------
-void merge filtere RGB()
+void merge_filtere RGB()
 {
        for(int i=0;i<SIZE;i++){
             for(int j=0;j<SIZE;j++)
@@ -206,6 +206,26 @@ void merge filtere RGB()
             }
         }
 
+}
+void darken_lighten_RGB(){
+     std::cout << "if you want it darker enter 1 else enter 2";
+    int x;
+    std::cin >> x;
+    if (x == 1) {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                for (int k = 0; k < RGB; k++) {
+                    imgRGB[i][j][k] = imgRGB[i][j][k] / 4;
+                }
+    } else {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                for (int k = 0; k < RGB; k++) {
+                    imgRGB[i][j][k] = (imgRGB[i][j][k]) / 2 + 63;
+
+                }
+
+    }
 }
 void Mirror_filter_RGB() {
     char side;
