@@ -196,6 +196,17 @@ void Flip_filter_RGB() {
     }
 }
 //-------------------------------------------------------------------------------------------
+void merge filtere RGB()
+{
+       for(int i=0;i<SIZE;i++){
+            for(int j=0;j<SIZE;j++)
+            for(int k=0;k<RGB;k++)
+            {
+                imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB2[i][j][k])/2;// to merge mean to get the average of each two colors so i add the first color on the second and divide it by 2 and save it in imageGS1
+            }
+        }
+
+}
 void Mirror_filter_RGB() {
     char side;
     cout << "Mirror L(left) or R(right) or U(upper) or D(down) Side?? " << endl;
