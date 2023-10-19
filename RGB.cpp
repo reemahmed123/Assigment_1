@@ -227,6 +227,41 @@ void darken_lighten_RGB(){
 
     }
 }
+void shrink_filter()
+{
+     for(int i=0;i<SIZE;i++)
+        for(int j=0;j<SIZE;j++)
+        {
+            imgGS2[i][j]=255;
+        }
+    int x;
+    cout<<"enter 1 if you want to shrink to half or two to third or three to quarter";
+    cin>>x;
+    if(x==1) {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+            for(int k=0;k<RGB;k++)
+            {
+                imgRGB2[i / 2][j / 2][k]= imgRGB1[i][j][k];
+            }
+    }
+    else if(x==2) {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                for(int k=0;k<RGB;k++)
+                {
+                imgRGB2[i / 3][j / 3][k] = imgRGB1[i][j][k];
+            }
+    }
+    else  {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++)
+                for(int k=0;k<RGB;k++)
+                {
+                imgRGB2[i / 4][j / 4][k] = imgRGB1[i][j][k];
+            }
+    }
+}
 void Mirror_filter_RGB() {
     char side;
     cout << "Mirror L(left) or R(right) or U(upper) or D(down) Side?? " << endl;
