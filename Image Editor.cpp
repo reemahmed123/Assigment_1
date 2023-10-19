@@ -10,6 +10,7 @@
 #include <cmath>
 #include "bmplib.cpp"
 #include "filters.cpp"
+//we call "filters.cpp" because it is include the filters i will apply them to images
 using namespace std;
 char choice;  //number of filter which i will choose
 void loadImageGS1 ();
