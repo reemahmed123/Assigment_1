@@ -11,7 +11,7 @@
 #include "bmplib.cpp"
 using namespace std;
 unsigned char direct;
-unsigned char imageRGB1[SIZE][SIZE][RGB],imageRGB2[SIZE][SIZE][RGB],imgRGB1[SIZE][SIZE][RGB],imgRGB2[SIZE][SIZE][RGB],imgRGB3[SIZE][SIZE][RGB];
+unsigned char imageRGB1[SIZE][SIZE][RGB],imageRGB2[SIZE][SIZE][RGB];
 char choice;
 void loadImageRGB1();
 void loadImageRGB2();
@@ -38,7 +38,7 @@ int main()
         view_menu();
         cout << "choice filter: ";
         cin >> choice;
-        if (choice == 0) {
+        if (choice == '0') {
             break;
         } else {
             switch (choice) {
@@ -46,7 +46,7 @@ int main()
                     Black_and_White_filter_RGB();
                     break;
                 case '2':
-                    Invert_filter_RGB();
+                    //Invert_filter_RGB();
                     break;
                 case '3':
                     Merge_filter_RGB();
@@ -55,7 +55,7 @@ int main()
                     Flip_filter_RGB();
                     break;
                 case '5':
-                    Rotate_filter_RGB();
+                    //Rotate_filter_RGB();
                     break;
                 case '6':
                     darken_and_lighten_filter_RGB();
@@ -65,19 +65,19 @@ int main()
                     break;
                 case '8':
                     Enlarge_filter_RGB();
-                        break;
+                    break;
                 case 'a':
                     Mirror_filter_RGB();
                     break;
                 case 'b':
                     Shuffle_filter_RGB();
-                        break;
+                    break;
                 case 'd':
                     Crop_filter_RGB();
                     break;
                 case 'e':
                     Skew_Horizontally_filter_RGB();
-                        break;
+                    break;
             }
         }
     }
@@ -196,32 +196,33 @@ void Flip_filter_RGB() {
     }
 }
 //-------------------------------------------------------------------------------------------
-void merge_filtere RGB()
+void Merge_filter_RGB()
 {
-       for(int i=0;i<SIZE;i++){
-            for(int j=0;j<SIZE;j++)
+    for(int i=0;i<SIZE;i++){
+        for(int j=0;j<SIZE;j++)
             for(int k=0;k<RGB;k++)
             {
-                imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB2[i][j][k])/2;// to merge mean to get the average of each two colors so i add the first color on the second and divide it by 2 and save it in imageGS1
+                imageRGB1[i][j][k]=(imageRGB1[i][j][k]+imageRGB2[i][j][k])/2;// to merge mean to get the average of each two colors so i add the first color on the second and divide it by 2 and save it in imageGS1
             }
-        }
+    }
 
 }
-void darken_lighten_RGB(){
-     std::cout << "if you want it darker enter 1 else enter 2";
+//---------------------------------------------------------------------------
+void darken_and_lighten_filter_RGB(){
+    std::cout << "if you want it darker enter 1 else enter 2";
     int x;
     std::cin >> x;
     if (x == 1) {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
                 for (int k = 0; k < RGB; k++) {
-                    imgRGB[i][j][k] = imgRGB[i][j][k] / 4;
+                    imageRGB2[i][j][k] = imageRGB1[i][j][k] / 4;
                 }
     } else {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
                 for (int k = 0; k < RGB; k++) {
-                    imgRGB[i][j][k] = (imgRGB[i][j][k]) / 2 + 63;
+                    imageRGB2[i][j][k] = (imageRGB1[i][j][k]) / 2 + 63;
 
                 }
 
@@ -229,10 +230,12 @@ void darken_lighten_RGB(){
 }
 void shrink_filter()
 {
-     for(int i=0;i<SIZE;i++)
+    for(int i=0;i<SIZE;i++)
         for(int j=0;j<SIZE;j++)
         {
-            imgGS2[i][j]=255;
+            for(int k = 0 ; k < RGB; k++){
+                imageRGB2[i][j][k]=255;
+            }
         }
     int x;
     cout<<"enter 1 if you want to shrink to half or two to third or three to quarter";
@@ -240,74 +243,27 @@ void shrink_filter()
     if(x==1) {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
-            for(int k=0;k<RGB;k++)
-            {
-                imgRGB2[i / 2][j / 2][k]= imgRGB1[i][j][k];
-            }
+                for(int k=0;k<RGB;k++)
+                {
+                    imageRGB2[i / 2][j / 2][k]= imageRGB1[i][j][k];
+                }
     }
     else if(x==2) {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
                 for(int k=0;k<RGB;k++)
                 {
-                imgRGB2[i / 3][j / 3][k] = imgRGB1[i][j][k];
-            }
+                    imageRGB2[i / 3][j / 3][k] = imageRGB1[i][j][k];
+                }
     }
     else  {
         for (int i = 0; i < SIZE; i++)
             for (int j = 0; j < SIZE; j++)
                 for(int k=0;k<RGB;k++)
                 {
-                imgRGB2[i / 4][j / 4][k] = imgRGB1[i][j][k];
-            }
+                    imageRGB2[i / 4][j / 4][k] = imageRGB1[i][j][k];
+                }
     }
-}
-void blur_filter_RGB()
-{
-       for(int i=0;i<SIZE;i++)
-            for(int j=0;j<SIZE;j++)
-            for(int k=0;k<RGB;k++)
-            {
-                if(!i and !j)
-                {
-                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i+1][j][k]+imgRGB1[i+1][j+1][k])/4;
-                }
-                else if(!i and j==255)
-                {
-                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j-1][k]+imgRGB1[i+1][j][k]+imgRGB1[i+1][j-1][k])/4;
-                }
-                else if(!j and i==255)
-                {
-                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i-1][j][k]+imgRGB1[i-1][j-1][k])/4;
-                }
-                else if (i==255 and j==255)
-                {
-                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j-1][k]+imgRGB1[i-1][j][k]+imgRGB1[i-1][j-1][k])/4;
-                }
-                else if (!i)
-                {
-                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i+1][j][k]+imgRGB1[i+1][j+1][k]+imgRGB1[i-1][j][k]+imgRGB1[i-1][j+1][k])/6;
-                }
-                else if (i==255)
-                {
-                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i][j-1][k]+imgRGB1[i-1][j+1][k]+imgRGB1[i-1][j][k]+imgRGB1[i-1][j-1][k])/6;
-                }
-                else if(!j)
-                {
-                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i][j+1][k]+imgRGB1[i][j-1][k]+imgRGB1[i+1][j+1][k]+imgRGB1[i+1][j][k]+imgRGB1[i+1][j-1][k])/6;
-                }
-                else if(j==255)
-                {
-                    imgRGB1[i][j][k]=(imgRGB1[i][j][k]+imgRGB1[i+1][j][k]+imgRGB1[i-1][j][k]+imgRGB1[i][j-1][k]+imgRGB1[i-1][j-1][k]+imgRGB1[i+1][j-1][k])/6;
-                }
-                else {
-
-                    imgRGB1[i][j][k] = (imgRGB1[i][j][k]+imgRGB1[i+1][j][k]+imgRGB1[i-1][j][k]+imgRGB1[i][j-1][k]+imgRGB1[i][j+1][k]+imgRGB1[i-1][j-1][k]+imgRGB1[i-1][j+1][k]+imgRGB1[i+1][j-1][k]
-                                    +imgRGB1[i+1][j+1][k])/9;
-
-                }
-            }
-
 }
 void Mirror_filter_RGB() {
     char side;
@@ -412,7 +368,7 @@ void Detect_edges_filter_RGB() {
     }
 }
 //-----------------------------------------------------------------------------------------
-void Enlarge_filter_RGB();{
+void Enlarge_filter_RGB(){
     unsigned char q1[SIZE][SIZE][RGB];
     int quarter;
     cout<<"Enter quarter number that you want to enlarge: ";
@@ -421,16 +377,16 @@ void Enlarge_filter_RGB();{
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                q1[i][j][k] = imageRGB1[(i / 2) ][(j / 2) ][k];
-                 //Create a new image with the same size as the original image that contains the first quadrant
-                // that whose rows and columns start from pixel 0 to pixel 127
+                    q1[i][j][k] = imageRGB1[(i / 2) ][(j / 2) ][k];
+//Create a new image with the same size as the original image that contains the first quadrant
+// that whose rows and columns start from pixel 0 to pixel 127
                 }
             }
         }
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                imageRGB1[i][j][k] = q1[i][j][k];
+                    imageRGB1[i][j][k] = q1[i][j][k];
                 }
             }
         }
@@ -438,16 +394,16 @@ void Enlarge_filter_RGB();{
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                q1[i][j][k] = imageRGB1[i/2][(j/2) + 128][k] ;
-                //Create a new image with the same size as the original image that contains the second quadrant
-                // that whose rows starts from pixel 0 to 127 and columns starts from pixel 128 to pixel 255
+                    q1[i][j][k] = imageRGB1[i/2][(j/2) + 128][k] ;
+//Create a new image with the same size as the original image that contains the second quadrant
+// that whose rows starts from pixel 0 to 127 and columns starts from pixel 128 to pixel 255
                 }
             }
         }
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                imageRGB1[i][j][k] = q1[i][j][k];
+                    imageRGB1[i][j][k] = q1[i][j][k];
                 }
             }
         }
@@ -455,16 +411,16 @@ void Enlarge_filter_RGB();{
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                q1[i][j][k] = imageRGB1[(i/2) + 128][(j/2)][k];
-                //Create a new image with the same size as the original image that contains the third quadrant
-                // that whose rows starts from pixel 128 to 255 and columns starts from pixel 0 to pixel 127
+                    q1[i][j][k] = imageRGB1[(i/2) + 128][(j/2)][k];
+//Create a new image with the same size as the original image that contains the third quadrant
+// that whose rows starts from pixel 128 to 255 and columns starts from pixel 0 to pixel 127
                 }
             }
         }
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                imageRGB1[i][j][k] = q1[i][j][k];
+                    imageRGB1[i][j][k] = q1[i][j][k];
                 }
             }
         }
@@ -472,30 +428,30 @@ void Enlarge_filter_RGB();{
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                q1[i][j][k] = imageRGB1[(i / 2) + 128][(j / 2) + 128][k]; //Create a new image with the same size as the original image that contains the fourth quadrant
-                // that whose rows and columns start from pixel 128 to pixel 255
+                    q1[i][j][k] = imageRGB1[(i / 2) + 128][(j / 2) + 128][k]; //Create a new image with the same size as the original image that contains the fourth quadrant
+// that whose rows and columns start from pixel 128 to pixel 255
                 }
             }
         }
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
                 for(int k = 0; k < RGB; k++){
-                imageRGB1[i][j][k] = q1[i][j][k];
+                    imageRGB1[i][j][k] = q1[i][j][k];
                 }
             }
         }
     }
 }
-}
+
 //------------------------------------------------------------------------------------------------
 void Shuffle_filter_RGB(){
-unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZE][SIZE][RGB];
+    unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZE][SIZE][RGB];
 
     for (int i = 0; i < 128; i++) {
         for (int j = 0; j < 128; j++) {
             for(int k = 0; k < RGB; k++){
 
-               q1[i][j][k] = imageRGB1[i][j][k]; //Create a new image that contains the first quadrant
+                q1[i][j][k] = imageRGB1[i][j][k]; //Create a new image that contains the first quadrant
             }
         }
     }
@@ -543,22 +499,22 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
             for (int i = 0; i < 128; i++) {
                 for (int j = 0; j < 128; j++) {
                     for(int k = 0; k < RGB; k++){
-                    if (order[h] == 1) {
+                        if (order[h] == 1) {
 // iterate through the first quarter
-                        imageRGB1[i][j][k] = q1[i][j][k];
+                            imageRGB1[i][j][k] = q1[i][j][k];
 
-                    } else if (order[h] == 2) {
+                        } else if (order[h] == 2) {
 
-                        imageRGB1[i][j][k] = q2[i][j + 128][k];
+                            imageRGB1[i][j][k] = q2[i][j + 128][k];
 
-                    } else if (order[h] == 3) {
+                        } else if (order[h] == 3) {
 
-                        imageRGB1[i][j][k] = q3[i + 128][j][k];
+                            imageRGB1[i][j][k] = q3[i + 128][j][k];
 
-                    } else if (order[h] == 4) {
+                        } else if (order[h] == 4) {
 
-                        imageRGB1[i][j][k] = q4[i + 128][j + 128][k];
-                    }
+                            imageRGB1[i][j][k] = q4[i + 128][j + 128][k];
+                        }
                     }
                 }
 
@@ -569,22 +525,22 @@ unsigned char q1[SIZE][SIZE][RGB],q2[SIZE][SIZE][RGB],q3[SIZE][SIZE][RGB],q4[SIZ
                 for (int j = 128; j < SIZE; j++) {
                     for(int k = 0; k < RGB; k++){
 
-                    if (order[h] == 1) {
+                        if (order[h] == 1) {
 
-                        imageRGB1[i][j][k] = q1[i][j - 128][k];
+                            imageRGB1[i][j][k] = q1[i][j - 128][k];
 
-                    } else if (order[h] == 2) {
+                        } else if (order[h] == 2) {
 
-                        imageRGB1[i][j][k] = q2[i][j][k];
+                            imageRGB1[i][j][k] = q2[i][j][k];
 
-                    } else if (order[h] == 3) {
+                        } else if (order[h] == 3) {
 
-                        imageRGB1[i][j][k] = q3[i + 128][j - 128][k];
+                            imageRGB1[i][j][k] = q3[i + 128][j - 128][k];
 
-                    } else if (order[h] == 4) {
+                        } else if (order[h] == 4) {
 
-                        imageRGB1[i][j][k] = q4[i + 128][j][k];
-                    }
+                            imageRGB1[i][j][k] = q4[i + 128][j][k];
+                        }
                     }
 
                 }
@@ -662,15 +618,15 @@ void Skew_Horizontally_filter_RGB(){
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
             for(int k = 0; k < RGB; k++){
-            image2[i][j][k] = 0;
+                image2[i][j][k] = 0;
             }
         }
     }
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
             for(int k = 0; k < RGB; k++){
-            image2[i][( j * int(x) ) / SIZE][k] = imageRGB1[i][j][k]; //Shrink the image by a value of x
-            // to avoid it from exceeding the original image size
+                image2[i][( j * int(x) ) / SIZE][k] = imageRGB1[i][j][k]; //Shrink the image by a value of x
+                // to avoid it from exceeding the original image size
             }
         }
     }
@@ -681,7 +637,7 @@ void Skew_Horizontally_filter_RGB(){
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
             for(int k = 0; k < RGB; k++){
-            image3[i][j + int(step)][k] = image2[i][j][k]; // shifting the image
+                image3[i][j + int(step)][k] = image2[i][j][k]; // shifting the image
             }
         }
         step -= move;
@@ -689,44 +645,9 @@ void Skew_Horizontally_filter_RGB(){
     for(int i = 0; i < SIZE; i++){
         for(int j = 0; j < SIZE; j++){
             for(int k = 0; k < RGB; k++){
-              imageRGB1[i][j][k] = image3[i][j][k];
+                imageRGB1[i][j][k] = image3[i][j][k];
             }
         }
     }
 
 }
-skew_vertically_filter(RGB)
-{
-      cout<<"enter the degree you want the image to be skewed by: ";
-    double degree;cin>>degree;
-    degree=degree*(M_PI / 180);
-    double x = 265 / (1+(1/tan(degree)));
-    for(int i=0 ;i<SIZE ; i++)
-        for(int j = 0 ; j < SIZE ; j++)
-        for(int k=0;k<RGB;k++)
-        {
-            imgRGB2[i][j][k]=255;
-            imgRGB3[i][j][k]=255;
-        }
-    double step = SIZE - x;
-    double move  = step/SIZE;
-    for(int i=0 ;i<SIZE ; i++)
-        for(int j = 0 ; j < SIZE ; j++)
-            for(int k=0;k<RGB;k++)
-        {
-            imgRGB2[i][j*int (x)/SIZE][k]=imgRGB1[i][j][k];
-        }
-
-
-    for(int i=0 ;i<SIZE ; i++)
-        for(int j = 0 ; j < SIZE ; j++)
-            for(int k=0;k<RGB;k++)
-        {
-            imgRGB3[i][j][k]=imgRGB2[i][j-int(step)][k];
-        }
-    step-=move;
-
-    showRGBBMP(imgRGB3);
-}
-}
-
