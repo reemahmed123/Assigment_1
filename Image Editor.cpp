@@ -10,7 +10,6 @@
 #include <cmath>
 #include "bmplib.cpp"
 #include "filters.cpp"
-//we call "filters.cpp" because it is include the filters i will apply them to images
 using namespace std;
 char choice;  //number of filter which i will choose
 void loadImageGS1 ();
@@ -53,20 +52,29 @@ int main()
                     Detect_edges_filter_GS();
                     break;
                 case '8':
-                    Enlarge_filter_Gs();
-                        break;
+                    Enlarge_filter_GS();
+                    break;
+                case '9':
+                    Shrink_GS();
+                    break;
                 case 'a':
                     Mirror_filter_GS();
                     break;
                 case 'b':
                     Shuffle_filter_GS();
-                        break;
+                    break;
+                case 'c':
+                    blur_GS();
+                    break;
                 case 'd':
                     Crop_filter_GS();
                     break;
                 case 'e':
                     Skew_Horizontally_filter_GS();
-                        break;
+                    break;
+                case 'f':
+                    skew_vertically_GS();
+                    break;
 
 
             }
