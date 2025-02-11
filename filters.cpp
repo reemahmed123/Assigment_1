@@ -2,7 +2,10 @@
 #include "bmplib.h"
 #include "iostream"
 using namespace std;
-unsigned char imageGS1[SIZE][SIZE],imageGS2[SIZE][SIZE],imgGS1[size][SIZE],imgGS2[size][SIZE],imgGS3[size][SIZE],direct;
+unsigned char imageGS1[SIZE][SIZE],imageGS2[SIZE][SIZE],imgGS3[SIZE][SIZE],direct;
+
+
+//----------------------------------------------------------------------------------------------
 void Black_and_White_filter_GS() {
     //This filter transform gray scale image to black and white image
     for (int i = 0; i < SIZE; i++) {
@@ -308,33 +311,34 @@ void Enlarge_filter_GS(){
         }
     }
 }
-void shrink gs(){
-     for(int i=0;i<SIZE;i++)
-            for(int j=0;j<SIZE;j++)
-            {
-               imgGS2[i][j]=255;
+//------------------------------------------------------------------------------------------
+void Shrink_GS (){
+    for(int i=0;i<SIZE;i++)
+        for(int j=0;j<SIZE;j++)
+        {
+            imageGS2[i][j]=255;
+        }
+    int x;
+    cout<<"enter 1 if you want to shrink to half or two to third or three to quarter";
+    cin>>x;
+    if(x==1) {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++) {
+                imageGS2[i / 2][j / 2] = imageGS1[i][j];
             }
-        int x;
-        cout<<"enter 1 if you want to shrink to half or two to third or three to quarter";
-        cin>>x;
-        if(x==1) {
-            for (int i = 0; i < SIZE; i++)
-                for (int j = 0; j < SIZE; j++) {
-                    imgGS2[i / 2][j / 2] = imgGS1[i][j];
-                }
-        }
-        else if(x==2) {
-            for (int i = 0; i < SIZE; i++)
-                for (int j = 0; j < SIZE; j++) {
-                    imgGS2[i / 3][j / 3] = imgGS1[i][j];
-                }
-        }
-        else  {
-            for (int i = 0; i < SIZE; i++)
-                for (int j = 0; j < SIZE; j++) {
-                    imgGS2[i / 4][j / 4] = imgGS1[i][j];
-                }
-        }
+    }
+    else if(x==2) {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++) {
+                imageGS2[i / 3][j / 3] = imageGS1[i][j];
+            }
+    }
+    else  {
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++) {
+                imageGS2[i / 4][j / 4] = imageGS1[i][j];
+            }
+    }
 }
 //------------------------------------------------------------------------------------------
 void Shuffle_filter_GS(){
@@ -486,64 +490,65 @@ void Shuffle_filter_GS(){
 
 }
 //----------------------------------------------------------------------------
-void blur-GS()
-    {
-       for(int i=0;i<SIZE;i++)
-            for(int j=0;j<SIZE;j++)
+void blur_GS()
+{
+    for(int i=0;i<SIZE;i++)
+        for(int j=0;j<SIZE;j++)
+        {
+            if(!i and !j)
             {
-                if(!i and !j)
-                {
-                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i+1][j]+imgGS1[i+1][j+1])/4;
-                }
-                else if(!i and j==255)
-                {
-                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j-1]+imgGS1[i+1][j]+imgGS1[i+1][j-1])/4;
-                }
-                else if(!j and i==255)
-                {
-                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i-1][j]+imgGS1[i-1][j-1])/4;
-                }
-                else if (i==255 and j==255)
-                {
-                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j-1]+imgGS1[i-1][j]+imgGS1[i-1][j-1])/4;
-                }
-                else if (!i)
-                {
-                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i+1][j]+imgGS1[i+1][j+1]+imgGS1[i-1][j]+imgGS1[i-1][j+1])/6;
-                }
-                else if (i==255)
-                {
-                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i][j-1]+imgGS1[i-1][j+1]+imgGS1[i-1][j]+imgGS1[i-1][j-1])/6;
-                }
-                else if(!j)
-                {
-                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i][j+1]+imgGS1[i][j-1]+imgGS1[i+1][j+1]+imgGS1[i+1][j]+imgGS1[i+1][j-1])/6;
-                }
-                else if(j==255)
-                {
-                    imgGS1[i][j]=(imgGS1[i][j]+imgGS1[i+1][j]+imgGS1[i-1][j]+imgGS1[i][j-1]+imgGS1[i-1][j-1]+imgGS1[i+1][j-1])/6;
-                }
-                else {
-
-                        imgGS1[i][j] = (imgGS1[i][j]+imgGS1[i+1][j]+imgGS1[i-1][j]+imgGS1[i][j-1]+imgGS1[i][j+1]+imgGS1[i-1][j-1]+imgGS1[i-1][j+1]+imgGS1[i+1][j-1]
-                                +imgGS1[i+1][j+1])/9;
-
-                }
+                imageGS1[i][j]=(imageGS1[i][j]+imageGS1[i][j+1]+imageGS1[i+1][j]+imageGS1[i+1][j+1])/4;
             }
-        showGSBMP(imgGS1);
+            else if(!i and j==255)
+            {
+                imageGS1[i][j]=(imageGS1[i][j]+imageGS1[i][j-1]+imageGS1[i+1][j]+imageGS1[i+1][j-1])/4;
+            }
+            else if(!j and i==255)
+            {
+                imageGS1[i][j]=(imageGS1[i][j]+imageGS1[i][j+1]+imageGS1[i-1][j]+imageGS1[i-1][j-1])/4;
+            }
+            else if (i==255 and j==255)
+            {
+                imageGS1[i][j]=(imageGS1[i][j]+imageGS1[i][j-1]+imageGS1[i-1][j]+imageGS1[i-1][j-1])/4;
+            }
+            else if (!i)
+            {
+                imageGS1[i][j]=(imageGS1[i][j]+imageGS1[i][j+1]+imageGS1[i+1][j]+imageGS1[i+1][j+1]+imageGS1[i-1][j]+imageGS1[i-1][j+1])/6;
+            }
+            else if (i==255)
+            {
+                imageGS1[i][j]=(imageGS1[i][j]+imageGS1[i][j+1]+imageGS1[i][j-1]+imageGS1[i-1][j+1]+imageGS1[i-1][j]+imageGS1[i-1][j-1])/6;
+            }
+            else if(!j)
+            {
+                imageGS1[i][j]=(imageGS1[i][j]+imageGS1[i][j+1]+imageGS1[i][j-1]+imageGS1[i+1][j+1]+imageGS1[i+1][j]+imageGS1[i+1][j-1])/6;
+            }
+            else if(j==255)
+            {
+                imageGS1[i][j]=(imageGS1[i][j]+imageGS1[i+1][j]+imageGS1[i-1][j]+imageGS1[i][j-1]+imageGS1[i-1][j-1]+imageGS1[i+1][j-1])/6;
+            }
+            else {
+
+                imageGS1[i][j] = (imageGS1[i][j]+imageGS1[i+1][j]+imageGS1[i-1][j]+imageGS1[i][j-1]+imageGS1[i][j+1]+imageGS1[i-1][j-1]+imageGS1[i-1][j+1]+imageGS1[i+1][j-1]
+                                  +imageGS1[i+1][j+1])/9;
+
+            }
+        }
+    showGSBMP(imageGS1);
 
 
-    }
 }
-void skew_vertically-GS(){
-     cout<<"enter the degree you want the image to be skewed by: ";
+
+//--------------------------------------------------------------------------------------
+void skew_vertically_GS(){
+    cout<<"enter the degree you want the image to be skewed by: ";
     double degree;cin>>degree;
     degree=degree*(M_PI / 180);
     double x = 265 / (1+(1/tan(degree)));
     for(int i=0 ;i<SIZE ; i++)
         for(int j = 0 ; j < SIZE ; j++)
         {
-            imgGS2[i][j]=255;
+            imageGS2[i][j]=255;
             imgGS3[i][j]=255;
         }
     double step = SIZE - x;
@@ -551,20 +556,21 @@ void skew_vertically-GS(){
     for(int i=0 ;i<SIZE ; i++)
         for(int j = 0 ; j < SIZE ; j++)
         {
-            imgGS2[i][j*int (x)/SIZE]=imgGS1[i][j];
+            imageGS2[i][j*int (x)/SIZE]=imageGS1[i][j];
         }
 
 
     for(int i=0 ;i<SIZE ; i++)
         for(int j = 0 ; j < SIZE ; j++)
         {
-            imgGS3[i][j]=imgGS2[i][j-int(step)];
+            imgGS3[i][j]=imageGS2[i][j-int(step)];
         }
     step-=move;
 
     showGSBMP(imgGS3);
 }
-}
+
+//----------------------------------------------------------------------------------
 void Skew_Horizontally_filter_GS(){
 
     cout<<"Enter the degree you want the image to be skewed by: ";
