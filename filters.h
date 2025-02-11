@@ -15,6 +15,9 @@ public:
     void Enlarge_filter_GS();
     void Shuffle_filter_GS();
     void Skew_Horizontally_filter_GS();
+    void skew_vertically_GS();
+    void blur_GS();
+    void Shrink_GS ();
 };
 #endif //FILTERS_H
 //this header file contain class of prototypes of filters
